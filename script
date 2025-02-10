@@ -1,0 +1,25 @@
+import qrcode
+import cv2
+from pyzbar.pyzbar import decode
+
+def generate_qr(data):
+    qr = qrcode.make(data)
+    qr.save("qrcode.png")
+    print("✅ QR Code Generated: 'qrcode.png'")
+
+def scan_qr(image_path):
+    image = cv2.imread(image_path)
+    decoded_objects = decode(image)
+
+    for obj in decoded_objects:
+        print(f"🔍 QR Code Content: {obj.data.decode('utf-8')}")
+
+choice = input("Enter '1' to generate QR Code, '2' to scan QR Code: ")
+
+if choice == "1":
+    text = input("Enter text or URL to generate QR Code: ")
+    generate_qr(text)
+elif choice == "2":
+    scan_qr("qrcode.png")
+else:
+    print("Invalid choice! Please enter 1 or 2.")
